@@ -1,0 +1,82 @@
+// Helper class to hide only visually, but have it available for screenreaders.
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.visually-hidden.focusable:active, .visually-hidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+
+// Helper class to clearfix and contain floats.
+.clearfix:before, .clearfix:after {
+  content: "";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+// Ensure hidden element is supported in older browsers
+[hidden] {
+  display: none;
+}
+
+/*
+ * Global utility classes to help with showing elements at different breakpoints
+ * "show-at-xxx"   : used to display at a certain breakpoint and up.
+ * "show-only-xxx" : used to display only at a specific breakpoint.
+ */
+.show-at-medium {
+  display: none;
+
+  @include media($medium) {
+    display: block;
+  }
+}
+
+.show-at-large {
+  display: none;
+
+  @include media($large) {
+    display: block;
+  }
+}
+
+.show-at-larger {
+  display: none;
+
+  @include media($larger) {
+    display: block;
+  }
+}
+
+.show-only-small {
+  @include media($medium) {
+    display: none;
+  }
+}
+
+.show-only-medium {
+  display: none;
+
+  @include media($medium) {
+    display: block;
+  }
+
+  @include media($large) {
+    display: none;
+  }
+}

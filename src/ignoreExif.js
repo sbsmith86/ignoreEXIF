@@ -1,4 +1,3 @@
-var IgnoreExif = (function () {
   /**
    * This function strips out EXIF data from a file and recreates a
    * FileReader Blob that we use to create the image object that is used
@@ -8,6 +7,7 @@ var IgnoreExif = (function () {
    *
    * @TODO - try moving this into a web worker to enhance performance.
    */
+var IgnoreExif = (function () {
   var offset = 0;
   var recess = 0;
   var pieces = [];

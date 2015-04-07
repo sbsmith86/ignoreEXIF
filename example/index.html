@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Example</title>
+    <link rel="stylesheet" href="../node_modules/dosomething-neue/dist/neue.css"/>
+  </head>
+  <body>
+    <div class="chrome">
+      <div class="wrapper">
+       <div class="navigation -floating">
+          <div class="navigation__logo">
+            <span>DoSomething.org</span>
+          </div>
+        </div>
+        <header class="header" role="banner">
+          <div class="wrapper">
+            <h1 class="header__title">Example for File API Fallback</h1>
+          </div>
+        </header>
+
+        <div class="container -padded">
+          <div class="wrapper">
+            <div class="container__block">
+              <div class="container -padded container--alpha">
+                <input class="js-image-upload" type="file" name="file-input" size="60">
+              </div>
+              <div class="container container--beta">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../dist/IgnoreEXIF.min.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        // console.log(IgnoreExif.generateBlob());
+        // IgnoreExif.testFunction();
+        $(".js-image-upload").on("change", function(event) {
+          event.preventDefault();
+          console.log("channnges");
+
+          var files = !!this.files ? this.files : [];
+
+          // If no file selected/no FileReader support, we're all done
+          if (!files.length || !window.FileReader) {
+            return;
+          }
+
+          var fr = new FileReader();
+
+          fr.readAsArrayBuffer(this.files[0]);
+          fr.onload = function () {
+            var blob = IgnoreExif.generateBlob(this.result);
+            var urlCreator = window.URL || window.webkitURL;
+            var imageUrl = urlCreator.createObjectURL(blob);
+            $(".container--beta").append("<img src='" + imageUrl + "'>");
+          };
+
+          var frNotStripped = new FileReader();
+          frNotStripped.readAsDataURL(this.files[0]);
+
+          frNotStripped.onloadend = function() {
+            var result = this.result;
+            $(".container--beta").append("<img src='" + result + "'>");
+          };
+        });
+      });
+    </script>
+  </body>
+</html>
+

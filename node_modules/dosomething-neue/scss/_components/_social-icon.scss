@@ -1,0 +1,52 @@
+// Social icons are used to link to social networks, or to link sharing actions.
+//
+// .-facebook - Facebook icon
+// .-twitter - Twitter icon
+// .-tumblr - Tumblr icon
+// .-instagram - Instagram icon
+// .-linkedin - LinkedIn icon
+// .-youtube - YouTube icon
+//
+// Markup: <a class="social-icon {{modifier_class}}"><span>Text Fallback</span></a>
+//
+// Styleguide Social Icon
+.social-icon {
+  &:after {
+    @include icomoon-icon;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 24px;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  span {
+    display: none;
+  }
+
+  &.-facebook:after {
+    content: "\e600";
+  }
+
+  &.-twitter:after {
+    content: "\e602";
+  }
+
+  &.-tumblr:after {
+    content: "\e604";
+  }
+
+  &.-instagram:after {
+    content: "\e601";
+  }
+
+  &.-linkedin:after {
+    content: "\eac8";
+  }
+
+  &.-youtube:after {
+    content: "\e603";
+  }
+}
