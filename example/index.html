@@ -15,18 +15,25 @@
         </div>
         <header class="header" role="banner">
           <div class="wrapper">
-            <h1 class="header__title">Example for File API Fallback</h1>
+            <h1 class="header__title">EXIF Stripping example</h1>
           </div>
         </header>
 
         <div class="container -padded">
           <div class="wrapper">
             <div class="container__block">
-              <div class="container -padded container--alpha">
-                <input class="js-image-upload" type="file" name="file-input" size="60">
-              </div>
-              <div class="container container--beta">
-              </div>
+              <input class="js-image-upload" type="file" name="file-input" size="60">
+            </div>
+          </div>
+        </div>
+
+        <div class="container -padded">
+          <div class="wrapper">
+            <div class="container__block -half js-original-photo">
+              <h1 class="tile__title">Original Photo</h1>
+            </div>
+            <div class="container__block -half js-stripped-photo">
+              <h1 class="tile__title">Photo with EXIF stripped</h1>
             </div>
           </div>
         </div>
@@ -38,11 +45,9 @@
 
     <script>
       $(document).ready(function() {
-        // console.log(IgnoreExif.generateBlob());
         // IgnoreExif.testFunction();
         $(".js-image-upload").on("change", function(event) {
           event.preventDefault();
-          console.log("channnges");
 
           var files = !!this.files ? this.files : [];
 
@@ -51,22 +56,22 @@
             return;
           }
 
-          var fr = new FileReader();
+          var stripped = new FileReader();
 
-          fr.readAsArrayBuffer(this.files[0]);
-          fr.onload = function () {
+          stripped.readAsArrayBuffer(this.files[0]);
+          stripped.onload = function () {
             var blob = IgnoreExif.generateBlob(this.result);
             var urlCreator = window.URL || window.webkitURL;
             var imageUrl = urlCreator.createObjectURL(blob);
-            $(".container--beta").append("<img src='" + imageUrl + "'>");
+            $(".js-stripped-photo").append("<img src='" + imageUrl + "'>");
           };
 
-          var frNotStripped = new FileReader();
-          frNotStripped.readAsDataURL(this.files[0]);
+          var original = new FileReader();
+          original.readAsDataURL(this.files[0]);
 
-          frNotStripped.onloadend = function() {
+          original.onloadend = function() {
             var result = this.result;
-            $(".container--beta").append("<img src='" + result + "'>");
+            $(".js-original-photo").append("<img src='" + result + "'>");
           };
         });
       });
